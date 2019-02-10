@@ -95,10 +95,10 @@ namespace VDS.RDF.Dynamic
                 switch (predicate)
                 {
                     case string stringPredicate:
-                        return new DynamicObjectCollection((DynamicNode)this[subject], DynamicHelper.ConvertPredicate(DynamicHelper.ConvertPredicate(stringPredicate, this), this, this.PredicateBaseUri));
+                        return new DynamicObjectCollection((DynamicNode)this[subject], stringPredicate.AsUriNode(this, this.PredicateBaseUri));
 
                     case Uri uriPredicate:
-                        return new DynamicObjectCollection((DynamicNode)this[subject], DynamicHelper.ConvertPredicate(uriPredicate, this, this.PredicateBaseUri));
+                        return new DynamicObjectCollection((DynamicNode)this[subject], uriPredicate.AsUriNode(this, this.PredicateBaseUri));
 
                     case INode nodePredicate:
                         return new DynamicObjectCollection((DynamicNode)this[subject], nodePredicate);
