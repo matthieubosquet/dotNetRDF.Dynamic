@@ -56,6 +56,24 @@ namespace VDS.RDF.Dynamic
         }
 
         [Fact]
+        public void Get_index2_1()
+        {
+            var d = new DynamicGraph();
+            d.LoadFromString(@"
+<urn:s> <urn:p> <urn:o> .
+");
+
+            var s = d.CreateUriNode(UriFactory.Create("urn:s"));
+            var p = "urn:p";
+            var o = d.CreateUriNode(UriFactory.Create("urn:o"));
+
+            var result = d[s, p];
+
+            Assert.IsType<DynamicObjectCollection>(result);
+            Assert.Collection((DynamicObjectCollection)result, item => Assert.Equal(o, item));
+        }
+
+        [Fact]
         public void Set_index_requires_subject()
         {
             var d = new DynamicGraph();

@@ -88,6 +88,39 @@ namespace VDS.RDF.Dynamic
             }
         }
 
+        public object this[INode subject, object predicate]
+        {
+            get
+            {
+                switch (predicate)
+                {
+                    case string stringPredicate:
+                        return new DynamicObjectCollection((DynamicNode)this[subject], DynamicHelper.ConvertPredicate(DynamicHelper.ConvertPredicate(stringPredicate, this), this, this.PredicateBaseUri));
+
+                    case Uri uriPredicate:
+                        return new DynamicObjectCollection((DynamicNode)this[subject], DynamicHelper.ConvertPredicate(uriPredicate, this, this.PredicateBaseUri));
+
+                    case INode nodePredicate:
+                        return new DynamicObjectCollection((DynamicNode)this[subject], nodePredicate);
+
+                    default:
+                        throw new Exception();
+                }
+            }
+
+            set
+            {
+                var objects = (DynamicObjectCollection)this[subject, predicate];
+
+                objects.Clear();
+
+                if (value != null)
+                {
+                    objects.Add(value);
+                }
+            }
+        }
+
         public void Add(INode subject, object predicateAndObjects)
         {
             if (subject is null)
