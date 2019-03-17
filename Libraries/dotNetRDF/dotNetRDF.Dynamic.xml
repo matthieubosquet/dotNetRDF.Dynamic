@@ -103,6 +103,20 @@
             <param name="baseUri">The Uri to use for resolving relative predicate references.</param>
             <returns>A dynamic node that wraps <paramref name="node"/>.</returns>
         </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicExtensions.AsDynamic(VDS.RDF.Query.SparqlResultSet)">
+            <summary>
+            Dynamically wraps a SPARQL result set.
+            </summary>
+            <param name="set">The SPARQL result set to wrap dynamically.</param>
+            <returns>A dynamic result set that wraps <paramref name="set"/>.</returns>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicExtensions.AsDynamic(VDS.RDF.Query.SparqlResult)">
+            <summary>
+            Dynamically wraps a SPARQL result.
+            </summary>
+            <param name="result">The SPARQL result to wrap dynamically.</param>
+            <returns>A dynamic result that wraps <paramref name="result"/>.</returns>
+        </member>
         <member name="T:VDS.RDF.Dynamic.DynamicGraph">
             <summary>
             A <see cref="T:VDS.RDF.WrapperGraph">wrapper</see> that provides read/write dictionary and dynamic functionality.
@@ -703,6 +717,128 @@
             <inheritdoc/>
         </member>
         <member name="M:VDS.RDF.Dynamic.DynamicObjectCollection.System#Dynamic#IDynamicMetaObjectProvider#GetMetaObject(System.Linq.Expressions.Expression)">
+            <inheritdoc/>
+        </member>
+        <member name="T:VDS.RDF.Dynamic.DynamicSparqlResult">
+            <summary>
+            Provides read/write dictionary and dynamic functionality for <see cref="T:VDS.RDF.Query.SparqlResult">SPARQL results</see>.
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.#ctor(VDS.RDF.Query.SparqlResult)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VDS.RDF.Dynamic.DynamicSparqlResult"/> class.
+            </summary>
+            <param name="original">The SPARQL result to wrap.</param>
+            <exception cref="T:System.ArgumentNullException">When <paramref name="original"/> is null.</exception>
+        </member>
+        <member name="P:VDS.RDF.Dynamic.DynamicSparqlResult.Item(System.String)">
+            <summary>
+            Gets or sets values equivalent to bindings in the result.
+            </summary>
+            <param name="variable"></param>
+            <returns>The binding converted to a native object.</returns>
+            <exception cref="T:System.ArgumentNullException">When <paramref name="variable"/> is null.</exception>
+        </member>
+        <member name="P:VDS.RDF.Dynamic.DynamicSparqlResult.Keys">
+            <summary>
+            Gets the variable names in the SPARQL result.
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Dynamic.DynamicSparqlResult.Values">
+            <summary>
+            Gets native values equivalent to bindings in the result.
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Dynamic.DynamicSparqlResult.Count">
+            <summary>
+            Gets the number of variables in the result.
+            </summary>
+        </member>
+        <member name="P:VDS.RDF.Dynamic.DynamicSparqlResult.IsReadOnly">
+            <summary>
+            Gets a value indicating whether this SPARQL result dictionary is read only (always false).
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.Add(System.String,System.Object)">
+            <summary>
+            Binds a variable to a node equivalent to <paramref name="value"/>.
+            </summary>
+            <param name="variable">The name of the variable to bind.</param>
+            <param name="value">An object that is converted to an equivalent node and bound to the variable.</param>
+            <exception cref="T:System.ArgumentNullException">When <paramref name="variable"/> is null.</exception>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.System#Collections#Generic#ICollection{System#Collections#Generic#KeyValuePair{System#String,System#Object}}#Add(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.Clear">
+            <summary>
+            Removes all variables in the result.
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.System#Collections#Generic#ICollection{System#Collections#Generic#KeyValuePair{System#String,System#Object}}#Contains(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.ContainsKey(System.String)">
+            <summary>
+            Checks whether a variable exists in the result.
+            </summary>
+            <param name="variable">The name of the variable to check.</param>
+            <returns>Whether a variable exists in the result.</returns>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.System#Collections#Generic#ICollection{System#Collections#Generic#KeyValuePair{System#String,System#Object}}#CopyTo(System.Collections.Generic.KeyValuePair{System.String,System.Object}[],System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.System#Collections#Generic#IEnumerable{System#Collections#Generic#KeyValuePair{System#String,System#Object}}#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.Remove(System.String)">
+            <summary>
+            Unbinds a variable from the result.
+            </summary>
+            <param name="variable">The variable to unbind.</param>
+            <returns>Whether a variable was removed.</returns>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.System#Collections#Generic#ICollection{System#Collections#Generic#KeyValuePair{System#String,System#Object}}#Remove(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.TryGetValue(System.String,System.Object@)">
+            <summary>
+            Tries to get a native value equivalent to a binding from the result.
+            </summary>
+            <param name="variable">The name of the variable to try.</param>
+            <param name="value">A native value equivalent to the binding.</param>
+            <returns>Whether <paramref name="value"/> was set.</returns>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through pairs of variable names and native values equivalent to bindings in the result.
+            </summary>
+            <returns>An enumerator that iterates through pairs of variable names and native values equivalent to bindings in the result.</returns>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResult.System#Dynamic#IDynamicMetaObjectProvider#GetMetaObject(System.Linq.Expressions.Expression)">
+            <inheritdoc/>
+        </member>
+        <member name="T:VDS.RDF.Dynamic.DynamicSparqlResultSet">
+            <summary>
+            Provides dynamic functionality for <see cref="T:VDS.RDF.Query.SparqlResultSet">SPARQL result sets</see>.
+            </summary>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResultSet.#ctor(VDS.RDF.Query.SparqlResultSet)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VDS.RDF.Dynamic.DynamicSparqlResultSet"/> class.
+            </summary>
+            <param name="original">The SPARQL result set to wrap.</param>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResultSet.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through dynamic results in the set.
+            </summary>
+            <returns>An enumerator that can be used to iterate through dynamic results in the set.</returns>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResultSet.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:VDS.RDF.Dynamic.DynamicSparqlResultSet.System#Dynamic#IDynamicMetaObjectProvider#GetMetaObject(System.Linq.Expressions.Expression)">
             <inheritdoc/>
         </member>
         <member name="T:VDS.RDF.Dynamic.DynamicSubjectCollection">
