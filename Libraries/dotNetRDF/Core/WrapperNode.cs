@@ -33,7 +33,7 @@ namespace VDS.RDF
     /// <summary>
     /// Abstract decorator for Nodes to make it easier to layer functionality on top of existing implementations.
     /// </summary>
-    public abstract partial class WrapperNode : INode
+    public abstract partial class WrapperNode : INode, IBlankNode, IUriNode, ILiteralNode
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WrapperNode"/> class.
@@ -74,6 +74,76 @@ namespace VDS.RDF
             set
             {
                 Node.GraphUri = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        string IBlankNode.InternalID
+        {
+            get
+            {
+                if (!(Node is IBlankNode blankNode))
+                {
+                    throw new InvalidCastException();
+                }
+
+                return blankNode.InternalID;
+            }
+        }
+
+        /// <inheritdoc/>
+        Uri IUriNode.Uri
+        {
+            get
+            {
+                if (!(Node is IUriNode uriNode))
+                {
+                    throw new InvalidCastException();
+                }
+
+                return uriNode.Uri;
+            }
+        }
+
+        /// <inheritdoc/>
+        string ILiteralNode.Value
+        {
+            get
+            {
+                if (!(Node is ILiteralNode literalNode))
+                {
+                    throw new InvalidCastException();
+                }
+
+                return literalNode.Value;
+            }
+        }
+
+        /// <inheritdoc/>
+        string ILiteralNode.Language
+        {
+            get
+            {
+                if (!(Node is ILiteralNode literalNode))
+                {
+                    throw new InvalidCastException();
+                }
+
+                return literalNode.Language;
+            }
+        }
+
+        /// <inheritdoc/>
+        Uri ILiteralNode.DataType
+        {
+            get
+            {
+                if (!(Node is ILiteralNode literalNode))
+                {
+                    throw new InvalidCastException();
+                }
+
+                return literalNode.DataType;
             }
         }
 
