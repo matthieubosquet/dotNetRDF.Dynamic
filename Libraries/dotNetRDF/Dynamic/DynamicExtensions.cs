@@ -118,6 +118,11 @@ namespace VDS.RDF.Dynamic
                     return booleanNode.AsBoolean();
 
                 case DateTimeNode dateTimeNode:
+                    LiteralNode x = (LiteralNode)node;
+                    if (DateTimeOffset.TryParse(x.Value, out DateTimeOffset dto))
+                    {
+                        return dto;
+                    }
                     return dateTimeNode.AsDateTimeOffset();
 
                 case TimeSpanNode timeSpanNode:
